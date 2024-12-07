@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .About, .Education, .Experience, .Skills, .Projects, .Contact {
+            background: rgba(255, 255, 255, 0); /* completely transparent */
+            backdrop-filter: blur(10px); /* blurred background */
+            -webkit-backdrop-filter: blur(10px); /* for Safari */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 32px rgba(0, 0, 0, 0.2); /* stronger shadow */
+            border-radius: 15px; /* more rounded corners */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+            padding: 20px;
+            margin: 20px auto; /* more space between boxes and center align */
+            width: 60%; /* cover 60% of the width */
+            transition: transform 0.5s ease; /* smooth transition */
+        }
+        .About:hover, .Education:hover, .Experience:hover, .Skills:hover, .Projects:hover, .Contact:hover {
+            transform: scale(1.05); /* slight zoom on hover */
+        }
+        .About::before, .Education::before, .Experience::before, .Skills::before, .Projects::before, .Contact::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .About:hover::before, .Education:hover::before, .Experience:hover::before, .Skills:hover::before, .Projects:hover::before, .Contact:hover::before {
+            opacity: 1;
+        }
+        .About::after, .Education::after, .Experience::after, .Skills::after, .Projects::after, .Contact::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .About:hover::after, .Education:hover::after, .Experience:hover::after, .Skills:hover::after, .Projects:hover::after, .Contact:hover::after {
+            opacity: 1;
+        }
+        .About, .Education, .Experience, .Skills, .Projects, .Contact {
+            position: relative;
+            overflow: hidden;
+        }
+        .About::before, .Education::before, .Experience::before, .Skills::before, .Projects::before, .Contact::before,
+        .About::after, .Education::after, .Experience::after, .Skills::after, .Projects::after, .Contact::after {
+            pointer-events: none;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            text-align: center;
+            padding: 0; /* remove default padding */
+        }
+        li {
+            margin: 5px;
+            display: inline-block; /* make list items inline-block */
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        a:hover {
+            color: blue;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://t3.ftcdn.net/jpg/05/15/29/74/360_F_515297408_GRDBJY7xu6b5di37wldGRrJ2Y2Coyzp7.jpg'); /* medium lightness image with pattern */
+            background-attachment: fixed; /* for parallax effect */
+            background-size: cover; /* ensure it covers the whole page */
+            background-repeat: repeat; /* allow looping */
+            height: 100vh; /* ensure it fills the viewport height */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.5;
+            color: black; /* change text color to black */
+        }
+        html {
+            height: 100%; /* ensure the html element also fills the viewport height */
+        }
+        .section-selector {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .section-selector.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section-selector li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .section-selector li a {
+            text-decoration: none;
+            color: white;
+        }
+        .section-selector li a:hover {
+            color: #fff;
+            cursor: pointer;
+        }
+        div.about, div.education, div.experience, div.skills, div.projects, div.contact {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-in-out;
+            /* background-color: rgba(255, 255, 255, 0.1); */
+            background-color: #11ffee00;
+        }
+        div.About, div.Education, div.Experience, div.Skills, div.Projects, div.Contact {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            /* background-color: rgba(255, 255, 255, 0.1); */
+            background-color: #11ffee00;
+
+        }
+        div.About.show, div.Education.show, div.Experience.show, div.Skills.show, div.Projects.show, div.Contact.show {
+            display: block;
+            opacity: 1;
+            background-color: transparent;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <ul class="section-selector">
+        <li><a id="about">About</a></li>
+        <li><a id="education">Education</a></li>
+        <li><a id="experience">Experience</a></li>
+        <li><a id="skills">Skills</a></li>
+        <li><a id="projects">Projects</a></li>
+        <li><a id="contact">Contact</a></li>
+    </ul>
+    <div class="welcome">
+        <h1>Welcome to my Portfolio</h1>
+    </div>
+    <div class="About">
+        <h1>About Me</h1>
+        <p>I'm 14, I study in Dubai GIS and I have been working as a developer for 2 years. I am passionate about web development and always looking to learn new things.</p>
+    </div>
+    <div class="Education">
+        <h1>Education</h1>
+        <p>I have a Bachelor's degree in Computer Science from the University of California, Berkeley. I graduated in 2005 and have been working in the field ever since.</p>
+    </div>
+    <div class="Experience">
+        <h1>Experience</h1>
+        <p>I have been working as a developer for 2 years. I have experience with front-end and back-end development, as well as database design and administration.</p>
+    </div>
+    <div class="Skills">
+        <h1>Skills</h1>
+        <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>PHP</li>
+            <li>MySQL</li>
+            <li>Python</li>
+            <li>Ruby</li>
+            <li>Java</li>
+            <li>C++</li>
+        </ul>
+    </div>
+    <div class="Projects">
+        <h1>Projects</h1>
+        <ul>
+            <li>Project 1</li>
+            <li>Project 2</li>
+            <li>Project 3</li>
+        </ul>
+    </div>
+    <div class="Contact">
+        <h1>Contact</h1>
+        <p>Email: dmitrofnet@gmail.com</p>
+        <p>Phone: 123-456-7890</p>
+        <p>Address: 123 Main St, Anytown, USA</p>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.section-selector').classList.add('show');
+        const sections = ['.About', '.Education', '.Experience', '.Skills', '.Projects', '.Contact'];
+        sections.forEach((section, index) => {
+            setTimeout(() => {
+                document.querySelector(section).classList.add('show');
+            }, index * 200);
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            document.body.style.backgroundPositionY = -(scrolled * 0.3) + 'px';
+        });
+    });
+</script>
+</html>
